@@ -210,7 +210,7 @@
 
   <!-- MUSIC -->
   <div class="music"><audio id="song" loop preload="auto">
-      <source src="membasuh.mp3" type="audio/mpeg">
+      <source src="hindia.mp3" type="audio/mpeg">
     </audio><button onclick="toggleMusic()">♫ Music</button></div>
 
   <script>
@@ -246,7 +246,7 @@
         if (navigator.vibrate) navigator.vibrate(40);
 
         // autoplay music after user interaction
-        song.volume = 0.9;
+        song.volume = 1;
         song.play().catch(() => {});
 
         confetti({ particleCount: 180, spread: 80, origin: { y: 0.6 } });
