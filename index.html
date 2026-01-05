@@ -26,15 +26,18 @@
 
     /* INTRO SCREEN */
     .intro {
-      position: fixed;
-      inset: 0;
-      background: linear-gradient(180deg, #ffdde1, #ee9ca7);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      z-index: 100;
-      transition: opacity 1s ease;
+     position: fixed;
+     inset: 0;
+     background: linear-gradient(180deg, #ffdde1, #ee9ca7);
+     z-index: 999;
+     display: flex;
+     flex-direction: column;
+     align-items: center;
+     justify-content: center;
+     text-align: center;
+     padding: 24px;
+
+  transition: opacity 0.8s ease, visibility 0.8s ease;
     }
 
     .intro.hidden {
@@ -43,8 +46,16 @@
     }
 
     .intro h1 {
-      margin-bottom: 20px;
-      font-weight: 400;
+     margin: 0 0 12px;
+     font-size: 28px; /* tidak terlalu besar */
+     font-weight: 600;
+    }
+
+    .intro p {
+    max-width: 280px;
+    font-size: 15px;
+    line-height: 1.6;
+    margin-bottom: 24px;
     }
 
     /* BALLOONS */
@@ -180,8 +191,10 @@
 
   <!-- INTRO -->
   <div class="intro" id="intro">
-    <h1>HAIIIII, <br> i hope kamu suka sama birthday card nya yaaa 💖</h1>
-    <button id="startBtn">Mulai</button>
+    <h1>HAIIII,</h1>
+  <p>i hope kamu suka sama birthday card nya yaaa 💖</p>
+  <button id="startBtn">Mulai</button>
+    <button id="startBtn">Buka</button>
   </div>
 
   <!-- BALLOONS -->
