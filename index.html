@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Selamat Ulang Tahun</title>
+  <title>Hmmm apaa yaaa...</title>
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -209,7 +209,9 @@
   </div>
 
   <!-- MUSIC -->
-  <div class="music"><audio id="song" loop></audio><button onclick="toggleMusic()">♫ Music</button></div>
+  <div class="music"><audio id="song" loop preload="auto">
+      <source src="Membasuh.mp3" type="audio/mpeg">
+    </audio><button onclick="toggleMusic()">♫ Music</button></div>
 
   <script>
     const slides = document.querySelectorAll('.slide');
@@ -232,7 +234,26 @@
 
     const song = document.getElementById('song');
     function toggleMusic() {
-      song.paused ? song.play() : song.pause();
+      if (song.paused) song.play(); else song.pause();
+    }
+
+    // INTRO START BUTTON HANDLER
+    const intro = document.getElementById('intro');
+    const startBtn = document.getElementById('startBtn');
+
+    if (startBtn) {
+      startBtn.addEventListener('click', () => {
+        if (navigator.vibrate) navigator.vibrate(40);
+
+        // autoplay music after user interaction
+        song.volume = 0.9;
+        song.play().catch(() => {});
+
+        confetti({ particleCount: 180, spread: 80, origin: { y: 0.6 } });
+
+        intro.classList.add('hide');
+        setTimeout(() => intro.style.display = 'none', 800);
+      });
     }
 
     document.getElementById('startBtn').addEventListener('click', () => {
