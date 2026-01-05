@@ -24,6 +24,29 @@
       color: #333;
     }
 
+    /* INTRO SCREEN */
+    .intro {
+      position: fixed;
+      inset: 0;
+      background: linear-gradient(180deg, #ffdde1, #ee9ca7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      z-index: 100;
+      transition: opacity 1s ease;
+    }
+
+    .intro.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .intro h1 {
+      margin-bottom: 20px;
+      font-weight: 600;
+    }
+
     /* BALLOONS */
     .balloon {
       position: fixed;
@@ -31,7 +54,7 @@
       width: 40px;
       height: 55px;
       background: radial-gradient(circle at 30% 30%, #fff, var(--color));
-      border-radius: 50% 50% 50% 50%;
+      border-radius: 50%;
       animation: floatUp linear infinite;
       z-index: 0;
     }
@@ -82,7 +105,6 @@
       to { opacity: 1; transform: scale(1); }
     }
 
-    /* PHOTO BOX */
     .photo {
       width: 100%;
       height: 220px;
@@ -104,7 +126,6 @@
       100% { transform: translateX(0) rotate(-2deg); }
     }
 
-    /* TEXT BOX */
     .text {
       background: #fff;
       border-radius: 14px;
@@ -113,7 +134,6 @@
       line-height: 1.6;
     }
 
-    /* CONTROLS */
     .controls {
       position: fixed;
       bottom: 16px;
@@ -137,7 +157,6 @@
 
     button:active { transform: scale(0.95); }
 
-    /* MUSIC */
     .music {
       position: fixed;
       bottom: 16px;
@@ -150,18 +169,20 @@
       font-size: 12px;
     }
 
-    /* DESKTOP TWEAK */
     @media (min-width: 768px) {
-      .slide {
-        max-width: 700px;
-        flex-direction: row;
-      }
+      .slide { max-width: 700px; flex-direction: row; }
       .photo { width: 45%; height: 260px; }
       .text { width: 55%; }
     }
   </style>
 </head>
 <body>
+
+  <!-- INTRO -->
+  <div class="intro" id="intro">
+    <h1>Tap untuk memulai 💖</h1>
+    <button id="startBtn">Mulai</button>
+  </div>
 
   <!-- BALLOONS -->
   <script>
@@ -178,60 +199,21 @@
 
   <!-- SLIDESHOW -->
   <div class="slideshow">
-
     <div class="slide active">
-      <div class="photo">
-        <img src="photo1.jpg" alt="foto 1">
-      </div>
-      <div class="text">
-        <h3>Selamat Ulang Tahun 🎉</h3>
-        <p>Hari ini bukan cuma tentang umur yang nambah, tapi tentang semua cerita yang udah kita lewatin.</p>
-      </div>
+      <div class="photo"><img src="photo1.jpg"></div>
+      <div class="text"><h3>Selamat Ulang Tahun 🎉</h3><p>Hari ini bukan cuma tentang umur yang nambah, tapi tentang semua cerita yang udah kita lewatin.</p></div>
     </div>
-
-    <div class="slide">
-      <div class="photo">
-        <img src="photo2.jpg" alt="foto 2">
-      </div>
-      <div class="text">
-        <p>Terima kasih udah bertahan sejauh ini. Semua capek, sedih, dan tawa itu berarti.</p>
-      </div>
-    </div>
-
-    <div class="slide">
-      <div class="photo">
-        <img src="photo3.jpg" alt="foto 3">
-      </div>
-      <div class="text">
-        <p>Semoga ke depan lebih banyak hal baik yang datang, pelan-pelan tapi pasti 🤍</p>
-      </div>
-    </div>
-
-    <div class="controls" aria-label="slide navigation">
-      <button onclick="prevSlide()">←</button>
-      <button onclick="nextSlide()">→</button>
-    </div>
+    <div class="slide"><div class="photo"><img src="photo2.jpg"></div><div class="text"><p>Terima kasih udah bertahan sejauh ini. Semua capek, sedih, dan tawa itu berarti.</p></div></div>
+    <div class="slide"><div class="photo"><img src="photo3.jpg"></div><div class="text"><p>Semoga ke depan lebih banyak hal baik yang datang, pelan-pelan tapi pasti 🤍</p></div></div>
+    <div class="controls"><button onclick="prevSlide()">←</button><button onclick="nextSlide()">→</button></div>
   </div>
 
-  <!-- MUSIC (LEGAL NOTE) -->
-  <!-- Karena lagu "Membasuh - Hindia" adalah copyrighted,
-       cara AMAN adalah:
-       1. Upload file mp3 milikmu sendiri dan ganti src audio
-       2. ATAU embed Spotify iframe -->
-
-  <div class="music">
-    <audio id="song" loop>
-      <!-- <source src="membasuh.mp3" type="audio/mpeg"> -->
-    </audio>
-    <button onclick="toggleMusic()">♫ Music</button>
-  </div>
+  <!-- MUSIC -->
+  <div class="music"><audio id="song" loop></audio><button onclick="toggleMusic()">♫ Music</button></div>
 
   <script>
-    // CONFETTI ON LOAD
-    confetti({ particleCount: 120, spread: 70, origin: { y: 0.6 } });
-
-    let index = 0;
     const slides = document.querySelectorAll('.slide');
+    let index = 0;
 
     function showSlide(i) {
       slides.forEach(s => s.classList.remove('active'));
@@ -250,9 +232,16 @@
 
     const song = document.getElementById('song');
     function toggleMusic() {
-      if (song.paused) song.play(); else song.pause();
+      song.paused ? song.play() : song.pause();
     }
-  </script>
 
+    document.getElementById('startBtn').addEventListener('click', () => {
+      document.getElementById('intro').classList.add('hidden');
+      confetti({ particleCount: 150, spread: 80, origin: { y: 0.6 } });
+      song.play().catch(()=>{});
+    });
+
+    console.assert(slides.length > 0, 'Slides should exist');
+  </script>
 </body>
 </html>
