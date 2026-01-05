@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Selamat Ulang Tahun</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <!-- Confetti library -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(180deg, #ffdde1, #ee9ca7);
+      overflow-x: hidden;
+      color: #333;
+    }
+
+    /* BALLOONS */
+    .balloon {
+      position: fixed;
+      bottom: -150px;
+      width: 40px;
+      height: 55px;
+      background: radial-gradient(circle at 30% 30%, #fff, var(--color));
+      border-radius: 50% 50% 50% 50%;
+      animation: floatUp linear infinite;
+      z-index: 0;
+    }
+
+    .balloon::after {
+      content: '';
+      position: absolute;
+      bottom: -20px;
+      left: 50%;
+      width: 2px;
+      height: 20px;
+      background: #999;
+    }
+
+    @keyframes floatUp {
+      from { transform: translateY(0); }
+      to { transform: translateY(-120vh); }
+    }
+
+    /* SLIDES */
+    .slideshow {
+      position: relative;
+      z-index: 2;
+      padding: 20px;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .slide {
+      display: none;
+      flex-direction: column;
+      gap: 16px;
+      width: 100%;
+      max-width: 420px;
+      background: rgba(255,255,255,0.85);
+      border-radius: 20px;
+      padding: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+      animation: fadeIn 0.6s ease;
+    }
+
+    .slide.active { display: flex; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    /* PHOTO BOX */
+    .photo {
+      width: 100%;
+      height: 220px;
+      border-radius: 16px;
+      overflow: hidden;
+      animation: floatSide 6s ease-in-out infinite;
+      transform: rotate(-2deg);
+    }
+
+    .photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    @keyframes floatSide {
+      0% { transform: translateX(0) rotate(-2deg); }
+      50% { transform: translateX(10px) rotate(2deg); }
+      100% { transform: translateX(0) rotate(-2deg); }
+    }
+
+    /* TEXT BOX */
+    .text {
+      background: #fff;
+      border-radius: 14px;
+      padding: 14px;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    /* CONTROLS */
+    .controls {
+      position: fixed;
+      bottom: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 12px;
+      z-index: 10;
+    }
+
+    button {
+      border: none;
+      padding: 12px 18px;
+      border-radius: 999px;
+      background: #ff7a9e;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.2);
+    }
+
+    button:active { transform: scale(0.95); }
+
+    /* MUSIC */
+    .music {
+      position: fixed;
+      bottom: 16px;
+      right: 16px;
+      z-index: 5;
+    }
+
+    .music button {
+      background: #333;
+      font-size: 12px;
+    }
+
+    /* DESKTOP TWEAK */
+    @media (min-width: 768px) {
+      .slide {
+        max-width: 700px;
+        flex-direction: row;
+      }
+      .photo { width: 45%; height: 260px; }
+      .text { width: 55%; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- BALLOONS -->
+  <script>
+    const colors = ['#ff6f91', '#ffc75f', '#845ec2', '#4d96ff'];
+    for (let i = 0; i < 12; i++) {
+      const b = document.createElement('div');
+      b.className = 'balloon';
+      b.style.left = Math.random() * 100 + 'vw';
+      b.style.animationDuration = 8 + Math.random() * 6 + 's';
+      b.style.setProperty('--color', colors[Math.floor(Math.random()*colors.length)]);
+      document.body.appendChild(b);
+    }
+  </script>
+
+  <!-- SLIDESHOW -->
+  <div class="slideshow">
+
+    <div class="slide active">
+      <div class="photo">
+        <img src="photo1.jpg" alt="foto 1">
+      </div>
+      <div class="text">
+        <h3>Selamat Ulang Tahun 🎉</h3>
+        <p>Hari ini bukan cuma tentang umur yang nambah, tapi tentang semua cerita yang udah kita lewatin.</p>
+      </div>
+    </div>
+
+    <div class="slide">
+      <div class="photo">
+        <img src="photo2.jpg" alt="foto 2">
+      </div>
+      <div class="text">
+        <p>Terima kasih udah bertahan sejauh ini. Semua capek, sedih, dan tawa itu berarti.</p>
+      </div>
+    </div>
+
+    <div class="slide">
+      <div class="photo">
+        <img src="photo3.jpg" alt="foto 3">
+      </div>
+      <div class="text">
+        <p>Semoga ke depan lebih banyak hal baik yang datang, pelan-pelan tapi pasti 🤍</p>
+      </div>
+    </div>
+
+    <div class="controls" aria-label="slide navigation">
+      <button onclick="prevSlide()">←</button>
+      <button onclick="nextSlide()">→</button>
+    </div>
+  </div>
+
+  <!-- MUSIC (LEGAL NOTE) -->
+  <!-- Karena lagu "Membasuh - Hindia" adalah copyrighted,
+       cara AMAN adalah:
+       1. Upload file mp3 milikmu sendiri dan ganti src audio
+       2. ATAU embed Spotify iframe -->
+
+  <div class="music">
+    <audio id="song" loop>
+      <!-- <source src="membasuh.mp3" type="audio/mpeg"> -->
+    </audio>
+    <button onclick="toggleMusic()">♫ Music</button>
+  </div>
+
+  <script>
+    // CONFETTI ON LOAD
+    confetti({ particleCount: 120, spread: 70, origin: { y: 0.6 } });
+
+    let index = 0;
+    const slides = document.querySelectorAll('.slide');
+
+    function showSlide(i) {
+      slides.forEach(s => s.classList.remove('active'));
+      slides[i].classList.add('active');
+    }
+
+    function nextSlide() {
+      index = (index + 1) % slides.length;
+      showSlide(index);
+    }
+
+    function prevSlide() {
+      index = (index - 1 + slides.length) % slides.length;
+      showSlide(index);
+    }
+
+    const song = document.getElementById('song');
+    function toggleMusic() {
+      if (song.paused) song.play(); else song.pause();
+    }
+  </script>
+
+</body>
+</html>
